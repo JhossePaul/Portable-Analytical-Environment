@@ -1,0 +1,85 @@
+version: "3"
+services:
+  db:
+    container_name: database
+    image: postgres:l
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=default
+    volumes:
+      - ./data:/data
+    ports:
+      - "5432:5432"
+    networks:
+      - network
+  queue:
+    container_name: queue
+    image: rabbitmq:3-management
+    hostname: rabbit
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - network
+  shiny:
+    build: ./shiny
+    container_name: shiny
+    image: shiny
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      - network
+    volumes:
+      - ./shiny-apps:/srv/shiny-server/
+      - ./logs:/var/log/shiny-server/
+    ports:
+      - "3838:3838"
+  worker:
+    build: ./worker
+    container_name: worker
+    image: worker
+    depends_on:
+      - queue
+    links:
+      - queue
+    deploy:
+      replicas: 1
+    networks:
+      - network
+    command: ["./wait-for-it.sh", "queue:15672", "--strict", "--", "make", "start"]
+  client:
+    build: ./client
+    container_name: client
+    image: client
+    depends_on:
+      - queue
+      - worker
+      - db
+    links:
+      - queue
+      - db
+    ports:
+      - "80:80"
+    networks:
+      - network
+    deploy:
+      replicas: 1
+    command: ["./wait-for-it.sh", "queue:15672", "--strict", "--", "npm", "run", "server:prod"]
+  etl:
+    container_name: etl
+    build: ./etl
+    image: etl
+    links:
+      - db
+    volumes:
+      - ./data:/data
+    networks:
+      - network
+networks:
+  network:

@@ -1,0 +1,28 @@
+<!doctype html>
+<main>
+  <h1>Push this great button</h1>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-4">Normal distributed random numbers</label>
+      <button class="btn btn-danger col-sm-2" ng-click="$ctrl.submit()">
+        Generate
+      </button>
+    </div> <!-- /.form-control -->
+
+    <div class="form-group">
+      <label class="control-label col-sm-4">Available tables</label>
+      <button class="btn btn-danger col-sm-2" ng-click="$ctrl.updateTables()">
+        Update
+      </button>
+    </div> <!-- /.form-group -->
+
+  </form> <!-- /form.form-horizontal -->
+
+  <div class="row" ng-if="$ctrl.randomNumbers">
+    {{ $ctrl.randomNumbers }}
+  </div>
+
+  <div class="row" ng-if="$ctrl.tables">
+    {{ $ctrl.tables }}
+  </div>
+</main> <!-- /main -->

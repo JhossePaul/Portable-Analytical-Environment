@@ -1,0 +1,20 @@
+# Python's virtualenv
+.env/
+
+# R project files
+*.Rproj
+.Rproj.user/
+
+# Files to tes ETL
+test_files/
+
+# Node modules and public files
+public/
+node_modules/
+
+# Ignored extensions
+*.swp
+*.pyc
+*.csv
+*.log
+.DS_Store

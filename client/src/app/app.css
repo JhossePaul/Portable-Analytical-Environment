@@ -1,0 +1,28 @@
+h1, h2, h3, h4, h5 {
+  font-family: 'Raleway';
+  font-weight: 200;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+h4 {
+  font-size: 1.2em;
+}
+
+.row {
+  margin: 15px auto;
+}
+
+main {
+  padding-top: 70px;
+}
