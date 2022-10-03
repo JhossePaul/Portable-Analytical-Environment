@@ -113,12 +113,6 @@ This image exposes two ports:
 - 5672: The AMQP default port
 - 15672: A nice admin and monitor interface
 
-#### Database
-TODO
-
-#### Shiny Server
-TODO
-
 ## Usage
 
 ### Docker CLI usage
